@@ -55,7 +55,7 @@ mercy-Composer-MVP/
 
 1. 克隆项目
    ```bash
-   git clone https://github.com/yourusername/mercy-Composer-MVP.git
+   git clone git https://github.com/zjzjy/Blockchain-based-charity-donation-system.git
    cd mercy-Composer-MVP
    ```
 

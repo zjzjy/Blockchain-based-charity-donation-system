@@ -32,7 +32,7 @@
 
 1. 克隆项目
 ```bash
-git clone <repository-url>
+git clone https://github.com/zjzjy/Blockchain-based-charity-donation-system.git
 cd mercy
 ```
 

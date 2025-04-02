@@ -69,7 +69,7 @@ export FABRIC_VERSION=hlfv12
 
 1. 克隆项目
    ```bash
-   git clone https://github.com/yourusername/mercy-Composer.git
+   git clone https://github.com/zjzjy/Blockchain-based-charity-donation-system.git
    cd mercy-Composer
    ```
 
