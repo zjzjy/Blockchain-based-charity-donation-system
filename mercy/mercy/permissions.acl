@@ -1,0 +1,71 @@
+rule Default {
+    description: "Deny all access by default"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.mercy.charity.*"
+    action: DENY
+}
+
+// 捐赠者权限
+rule DonorCanViewOwnProfile {
+    description: "Allow donors to view their own profile"
+    participant: "org.mercy.charity.Donor"
+    operation: READ
+    resource: "org.mercy.charity.Donor"
+    condition: (resource.donorId == participant.donorId)
+    action: ALLOW
+}
+
+rule DonorCanMakeDonation {
+    description: "Allow verified donors to make donations"
+    participant: "org.mercy.charity.Donor"
+    operation: CREATE
+    resource: "org.mercy.charity.Donation"
+    condition: (participant.kycVerified == true)
+    action: ALLOW
+}
+
+// 项目权限
+rule ProjectOwnerCanUpdateProject {
+    description: "Allow project owners to update their projects"
+    participant: "org.mercy.charity.ProjectOwner"
+    operation: UPDATE
+    resource: "org.mercy.charity.Project"
+    condition: (resource.owner == participant.projectOwnerId)
+    action: ALLOW
+}
+
+rule AnyoneCanViewProjects {
+    description: "Allow anyone to view projects"
+    participant: "ANY"
+    operation: READ
+    resource: "org.mercy.charity.Project"
+    action: ALLOW
+}
+
+// 管理员权限
+rule AdminCanManageAll {
+    description: "Allow admin to manage all resources"
+    participant: "org.mercy.charity.Admin"
+    operation: ALL
+    resource: "org.mercy.charity.*"
+    action: ALLOW
+}
+
+// 审计员权限
+rule AuditorCanViewAndVerify {
+    description: "Allow auditors to view and verify projects"
+    participant: "org.mercy.charity.Auditor"
+    operation: READ
+    resource: "org.mercy.charity.*"
+    action: ALLOW
+}
+
+rule AuditorCanUpdateCompliance {
+    description: "Allow auditors to update compliance status"
+    participant: "org.mercy.charity.Auditor"
+    operation: UPDATE
+    resource: "org.mercy.charity.Project"
+    condition: (resource.complianceStatus != "BLACKLISTED")
+    action: ALLOW
+} 

@@ -1,0 +1,59 @@
+/**
+ * 慈善捐赠系统MVP版本的查询定义
+ */
+
+// 按状态查询项目
+query selectProjectsByStatus {
+  description: "按状态选择项目"
+  statement:
+    SELECT org.mercy.charity.Project
+      WHERE (projectStatus == _$status)
+}
+
+// 按筹资状态查询项目
+query selectProjectsByFundingStatus {
+  description: "按筹资状态选择项目"
+  statement:
+    SELECT org.mercy.charity.Project
+      WHERE (fundingStatus == _$status)
+}
+
+// 查询捐赠者的所有捐赠
+query selectDonationsByDonor {
+  description: "查询捐赠者的所有捐赠"
+  statement:
+    SELECT org.mercy.charity.Donation
+      WHERE (donor == _$donorId)
+}
+
+// 查询项目的所有捐赠
+query selectDonationsByProject {
+  description: "查询项目的所有捐赠"
+  statement:
+    SELECT org.mercy.charity.Donation
+      WHERE (project == _$projectId)
+}
+
+// 按所有者查询项目
+query selectProjectsByOwner {
+  description: "按所有者查询项目"
+  statement:
+    SELECT org.mercy.charity.Project
+      WHERE (owner == _$ownerId)
+}
+
+// 查询所有已完成但资金未释放的里程碑的项目
+query selectProjectsWithCompletedMilestonesNotFunded {
+  description: "查询所有已完成但资金未释放的里程碑的项目"
+  statement:
+    SELECT org.mercy.charity.Project
+      WHERE (SOME milestones SATISFY milestones.isCompleted == true AND milestones.fundingReleased == false)
+}
+
+// 查询具有指定类别的项目
+query selectProjectsByCategory {
+  description: "查询具有指定类别的项目"
+  statement:
+    SELECT org.mercy.charity.Project
+      WHERE (categories CONTAINS _$category)
+} 

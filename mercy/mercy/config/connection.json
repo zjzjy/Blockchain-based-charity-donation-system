@@ -1,0 +1,113 @@
+{
+    "name": "mercy-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "DonorOrg",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "DonorOrg": {
+            "mspid": "DonorOrgMSP",
+            "peers": ["peer0.donororg.example.com"],
+            "certificateAuthorities": ["ca.donororg.example.com"],
+            "adminPrivateKey": {
+                "path": "../organizations/peerOrganizations/donororg.example.com/users/Admin@donororg.example.com/msp/keystore/key.pem"
+            },
+            "signedCert": {
+                "path": "../organizations/peerOrganizations/donororg.example.com/users/Admin@donororg.example.com/msp/signcerts/cert.pem"
+            }
+        },
+        "CharityOrg": {
+            "mspid": "CharityOrgMSP",
+            "peers": ["peer0.charityorg.example.com"],
+            "certificateAuthorities": ["ca.charityorg.example.com"],
+            "adminPrivateKey": {
+                "path": "../organizations/peerOrganizations/charityorg.example.com/users/Admin@charityorg.example.com/msp/keystore/key.pem"
+            },
+            "signedCert": {
+                "path": "../organizations/peerOrganizations/charityorg.example.com/users/Admin@charityorg.example.com/msp/signcerts/cert.pem"
+            }
+        }
+    },
+    "peers": {
+        "peer0.donororg.example.com": {
+            "url": "grpcs://localhost:7051",
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/donororg.example.com/peers/peer0.donororg.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.donororg.example.com",
+                "hostnameOverride": "peer0.donororg.example.com"
+            }
+        },
+        "peer0.charityorg.example.com": {
+            "url": "grpcs://localhost:9051",
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/charityorg.example.com/peers/peer0.charityorg.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.charityorg.example.com",
+                "hostnameOverride": "peer0.charityorg.example.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.donororg.example.com": {
+            "url": "https://localhost:7054",
+            "caName": "ca-donororg",
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/donororg.example.com/ca/ca.donororg.example.com-cert.pem"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        },
+        "ca.charityorg.example.com": {
+            "url": "https://localhost:8054",
+            "caName": "ca-charityorg",
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/charityorg.example.com/ca/ca.charityorg.example.com-cert.pem"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    },
+    "orderers": {
+        "orderer.example.com": {
+            "url": "grpcs://localhost:7050",
+            "tlsCACerts": {
+                "path": "../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer.example.com",
+                "hostnameOverride": "orderer.example.com"
+            }
+        }
+    },
+    "channels": {
+        "mercychannel": {
+            "orderers": ["orderer.example.com"],
+            "peers": {
+                "peer0.donororg.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "peer0.charityorg.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    }
+}

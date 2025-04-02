@@ -1,0 +1,108 @@
+// 定义模型的命名空间
+namespace org.mercy.charity 
+
+// 捐赠者模型
+participant Donor identified by donorId {
+  o String donorId
+  o String name
+  o String email
+  o String phone
+  o String walletAddress
+  o Boolean kycVerified
+  o String[] preferredCategories
+  o Double totalDonatedAmount
+  o DateTime registrationDate
+  o String status
+}
+
+// 项目模型
+asset Project identified by projectId {
+  o String projectId
+  o String name
+  o String description
+  o DateTime startDate
+  o DateTime endDate
+  o String[] categories
+  o Double totalFundingRequired
+  o Double allocatedFunding
+  o String fundingStatus
+  o String projectStatus
+  o Milestone[] milestones
+  o TeamMember[] teamMembers
+  o Partner[] partners
+  o String complianceStatus
+  o String auditReportHash
+  o String registrationNumber
+}
+
+// 捐赠交易模型
+asset Donation identified by transactionId {
+  o String transactionId
+  o String donorId
+  o String projectId
+  o Double amount
+  o DateTime timestamp
+  o String status
+}
+
+// 里程碑模型
+concept Milestone {
+  o String milestoneId
+  o String description
+  o DateTime deadline
+  o Double fundingAmount
+  o Boolean isCompleted
+  o DateTime completionDate
+}
+
+// 项目拥有者
+participant ProjectOwner {
+    o String projectOwnerId
+    o String name
+    o String email
+    o String phone
+    o Boolean isVerified
+    o String[] projectIds
+}
+
+// 团队成员模型
+concept TeamMember {
+  o String memberId
+  o String name
+  o String role
+  o String contactInfo
+}
+
+// 合作伙伴模型
+concept Partner {
+  o String partnerId
+  o String name
+  o String type
+  o String contactInfo
+}
+
+// 枚举类型
+enum ProjectStatus {
+  o REGISTERED
+  o STARTED
+  o IN_PROGRESS
+  o NEAR_COMPLETION
+  o COMPLETED
+  o CANCELLED
+  o UNDER_REVIEW
+}
+
+enum FundingStatus {
+  o PENDING
+  o PARTIALLY_FUNDED
+  o FULLY_FUNDED
+  o CANCELLED
+  o UNDER_REVIEW
+}
+
+enum ComplianceStatus {
+  o UNVERIFIED
+  o VERIFIED
+  o SUSPENDED
+  o BLACKLISTED
+} 
