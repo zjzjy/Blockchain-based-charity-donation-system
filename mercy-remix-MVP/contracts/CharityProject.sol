@@ -97,6 +97,9 @@ contract CharityProject {
     mapping(address => Donor) public donors;
     mapping(address => bool) public isDonorRegistered;
     address[] public donorAddresses;
+    
+    // 存储所有项目ID
+    string[] public projectIds;
 
     // 投票记录映射
     mapping(string => mapping(string => mapping(address => bool))) public milestoneVotes;  // projectId => milestoneId => voter => hasVoted
@@ -227,6 +230,7 @@ contract CharityProject {
         }
 
         projectExists[projectId] = true;
+        projectIds.push(projectId); // 添加项目ID到数组
         emit ProjectCreated(projectId, name, msg.sender);
     }
 
@@ -257,8 +261,16 @@ contract CharityProject {
 
         // 更新项目资金状态
         project.allocatedFunding += msg.value;
+        
+        // 检查是否达到或超过筹资目标
         if (project.allocatedFunding >= project.totalFundingRequired) {
             project.fundingStatus = FundingStatus.FULLY_FUNDED;
+            
+            // 如果项目状态为REGISTERED，则自动更新为STARTED
+            if (project.projectStatus == ProjectStatus.REGISTERED) {
+                project.projectStatus = ProjectStatus.STARTED;
+                emit ProjectStatusUpdated(projectId, ProjectStatus.STARTED);
+            }
         } else if (project.allocatedFunding > 0) {
             project.fundingStatus = FundingStatus.PARTIALLY_FUNDED;
         }
@@ -368,10 +380,41 @@ contract CharityProject {
                     project.donors.length > 0) {
                     project.milestones[i].fundingReleased = true;
                     emit FundingReleased(projectId, milestoneId, msg.sender);
+                    
+                    // 检查是否所有里程碑都已完成并获得资金释放
+                    if (areAllMilestonesCompleted(projectId) && areAllMilestonesFundingReleased(projectId)) {
+                        // 自动更新项目状态为COMPLETED
+                        project.projectStatus = ProjectStatus.COMPLETED;
+                        emit ProjectStatusUpdated(projectId, ProjectStatus.COMPLETED);
+                    } else if (project.projectStatus == ProjectStatus.REGISTERED) {
+                        // 如果是第一个获得资金的里程碑，更新项目状态为STARTED
+                        project.projectStatus = ProjectStatus.STARTED;
+                        emit ProjectStatusUpdated(projectId, ProjectStatus.STARTED);
+                    } else if (project.projectStatus == ProjectStatus.STARTED) {
+                        // 如果项目已经开始但尚未完成所有里程碑，更新为IN_PROGRESS
+                        project.projectStatus = ProjectStatus.IN_PROGRESS;
+                        emit ProjectStatusUpdated(projectId, ProjectStatus.IN_PROGRESS);
+                    }
                 }
                 break;
             }
         }
+    }
+
+    // 检查项目是否所有里程碑都已释放资金
+    function areAllMilestonesFundingReleased(string memory projectId) 
+        public 
+        view 
+        projectExistsCheck(projectId) 
+        returns (bool) 
+    {
+        Project storage project = projects[projectId];
+        for (uint i = 0; i < project.milestones.length; i++) {
+            if (!project.milestones[i].fundingReleased) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // 获取里程碑投票状态
@@ -542,17 +585,148 @@ contract CharityProject {
         projectExistsCheck(projectId) 
         returns (uint256) 
     {
-        uint256 count = 0;
-        for (uint i = 0; i < projects[projectId].milestones.length; i++) {
-            if (keccak256(bytes(projects[projectId].milestones[i].milestoneId)) == keccak256(bytes(projectId))) {
-                count++;
-            }
-        }
-        return count;
+        return projects[projectId].donors.length;
     }
 
     // 获取项目的所有捐赠者
     function getProjectDonors(string memory projectId) public view projectExistsCheck(projectId) returns (address[] memory) {
         return projects[projectId].donors;
+    }
+
+    // 检查捐赠ID是否存在
+    function checkDonationExists(string memory transactionId) public view returns (bool) {
+        return donationExists[transactionId];
+    }
+    
+    // 生成交易ID查询辅助函数
+    function generateDonationId(string memory projectId, address donor) public pure returns (string memory) {
+        return string(abi.encodePacked(projectId, "_", toAsciiString(donor)));
+    }
+
+    // 获取所有项目ID列表
+    function getAllProjectIds() public view returns (string[] memory) {
+        return projectIds;
+    }
+    
+    // 获取项目总数
+    function getProjectCount() public view returns (uint256) {
+        return projectIds.length;
+    }
+    
+    // 获取项目概要信息（轻量版，不包含里程碑和团队成员详情）
+    function getProjectSummary(string memory projectId) 
+        public 
+        view 
+        projectExistsCheck(projectId) 
+        returns (
+            string memory name,
+            string memory description,
+            uint256 startDate,
+            uint256 endDate,
+            string[] memory categories,
+            uint256 totalFundingRequired,
+            uint256 allocatedFunding,
+            FundingStatus fundingStatus,
+            ProjectStatus projectStatus,
+            uint256 milestoneCount,
+            uint256 teamMemberCount,
+            address owner,
+            uint256 donorCount
+        ) 
+    {
+        Project storage project = projects[projectId];
+        return (
+            project.name,
+            project.description,
+            project.startDate,
+            project.endDate,
+            project.categories,
+            project.totalFundingRequired,
+            project.allocatedFunding,
+            project.fundingStatus,
+            project.projectStatus,
+            project.milestones.length,
+            project.teamMembers.length,
+            project.owner,
+            project.donors.length
+        );
+    }
+    
+    // 分页获取项目ID列表
+    function getProjectIdsPaginated(uint256 startIndex, uint256 count) public view returns (string[] memory) {
+        require(startIndex < projectIds.length, "Start index out of bounds");
+        
+        // 确定实际要返回的数量
+        uint256 actualCount = count;
+        if (startIndex + count > projectIds.length) {
+            actualCount = projectIds.length - startIndex;
+        }
+        
+        string[] memory result = new string[](actualCount);
+        for (uint256 i = 0; i < actualCount; i++) {
+            result[i] = projectIds[startIndex + i];
+        }
+        
+        return result;
+    }
+    
+    // 获取项目信息的结构体
+    struct ProjectInfo {
+        string projectId;
+        string name;
+        string description;
+        uint256 startDate;
+        uint256 endDate;
+        string[] categories;
+        uint256 totalFundingRequired;
+        uint256 allocatedFunding;
+        FundingStatus fundingStatus;
+        ProjectStatus projectStatus;
+        uint256 milestoneCount;
+        uint256 teamMemberCount;
+        address owner;
+        uint256 donorCount;
+    }
+    
+    // 分页获取项目详细信息
+    function getProjectsRange(uint256 startIndex, uint256 count) public view returns (ProjectInfo[] memory) {
+        require(startIndex < projectIds.length, "Start index out of bounds");
+        
+        // 确定实际要返回的数量
+        uint256 actualCount = count;
+        if (startIndex + count > projectIds.length) {
+            actualCount = projectIds.length - startIndex;
+        }
+        
+        ProjectInfo[] memory result = new ProjectInfo[](actualCount);
+        
+        for (uint256 i = 0; i < actualCount; i++) {
+            string memory projectId = projectIds[startIndex + i];
+            Project storage project = projects[projectId];
+            
+            result[i] = ProjectInfo({
+                projectId: project.projectId,
+                name: project.name,
+                description: project.description,
+                startDate: project.startDate,
+                endDate: project.endDate,
+                categories: project.categories,
+                totalFundingRequired: project.totalFundingRequired,
+                allocatedFunding: project.allocatedFunding,
+                fundingStatus: project.fundingStatus,
+                projectStatus: project.projectStatus,
+                milestoneCount: project.milestones.length,
+                teamMemberCount: project.teamMembers.length,
+                owner: project.owner,
+                donorCount: project.donors.length
+            });
+        }
+        
+        return result;
+    }
+    
+    // 获取简化版项目信息（减少栈深度）
+    function getAllProjectsSimplified() public view returns (ProjectInfo[] memory) {
+        return getProjectsRange(0, projectIds.length);
     }
 } 
