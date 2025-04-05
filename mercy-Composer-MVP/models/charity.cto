@@ -1,0 +1,179 @@
+/**
+ * 慈善捐赠系统MVP版本的业务网络定义
+ * 基于Hyperledger Composer实现
+ */
+namespace org.mercy.charity
+
+/**
+ * 捐赠者模型
+ */
+participant Donor identified by donorId {
+  o String donorId
+  o String name
+  o String email
+  o String phone
+  o String walletAddress
+  o Double totalDonatedAmount
+  o DateTime registrationDate
+}
+
+/**
+ * 项目所有者
+ */
+participant ProjectOwner identified by projectOwnerId {
+  o String projectOwnerId
+  o String name
+  o String email
+  o String phone
+  o String[] projectIds
+}
+
+/**
+ * 项目模型
+ */
+asset Project identified by projectId {
+  o String projectId
+  o String name
+  o String description
+  o DateTime startDate
+  o DateTime endDate
+  o String[] categories
+  o Double totalFundingRequired
+  o Double allocatedFunding
+  o String fundingStatus
+  o String projectStatus
+  o Milestone[] milestones
+  o TeamMember[] teamMembers
+  --> ProjectOwner owner
+}
+
+/**
+ * 捐赠交易模型
+ */
+asset Donation identified by transactionId {
+  o String transactionId
+  --> Donor donor
+  --> Project project
+  o Double amount
+  o DateTime timestamp
+  o String status
+}
+
+/**
+ * 里程碑模型
+ */
+concept Milestone {
+  o String milestoneId
+  o String description
+  o DateTime deadline
+  o Double fundingAmount
+  o Boolean isCompleted
+  o DateTime completionDate optional
+  o Boolean fundingReleased
+  o String evidenceHash optional  // 证明里程碑完成的证据文件哈希
+}
+
+/**
+ * 团队成员模型
+ */
+concept TeamMember {
+  o String memberId
+  o String name
+  o String role
+  o String contactInfo
+}
+
+/**
+ * 捐赠交易
+ */
+transaction MakeDonation {
+  --> Donor donor
+  --> Project project
+  o Double amount
+}
+
+/**
+ * 更新项目状态
+ */
+transaction UpdateProjectStatus {
+  --> Project project
+  o String newStatus
+}
+
+/**
+ * 更新项目里程碑
+ */
+transaction UpdateMilestone {
+  --> Project project
+  o String milestoneId
+  o Boolean isCompleted
+  o String evidenceHash optional
+}
+
+/**
+ * 捐赠者审核里程碑并决定是否释放资金
+ */
+transaction ApproveMilestoneFunding {
+  --> Donor donor
+  --> Project project
+  o String milestoneId
+  o Boolean approved
+}
+
+/**
+ * 创建默认参与者的交易
+ */
+transaction SetupDemo {
+}
+
+/**
+ * 事件定义
+ */
+// 捐赠完成事件
+event DonationCompleted {
+  --> Donation donation
+  --> Donor donor
+  --> Project project
+  o Double amount
+}
+
+// 项目状态更新事件
+event ProjectStatusUpdated {
+  --> Project project
+  o String oldStatus
+  o String newStatus
+}
+
+// 里程碑更新事件
+event MilestoneUpdated {
+  --> Project project
+  o String milestoneId
+  o Boolean isCompleted
+  o String evidenceHash optional
+}
+
+// 里程碑资金释放事件
+event MilestoneFundingReleased {
+  --> Project project
+  o String milestoneId
+  --> Donor donor
+  o Boolean approved
+}
+
+/**
+ * 枚举类型
+ */
+enum ProjectStatus {
+  o REGISTERED
+  o STARTED
+  o IN_PROGRESS
+  o COMPLETED
+  o CANCELLED
+}
+
+enum FundingStatus {
+  o PENDING
+  o PARTIALLY_FUNDED
+  o FULLY_FUNDED
+  o CANCELLED
+} 

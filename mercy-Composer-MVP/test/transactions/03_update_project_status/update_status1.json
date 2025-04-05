@@ -1,0 +1,5 @@
+{
+  "$class": "org.mercy.charity.UpdateProjectStatus",
+  "project": "resource:org.mercy.charity.Project#PROJECT001",
+  "newStatus": "STARTED"
+} 

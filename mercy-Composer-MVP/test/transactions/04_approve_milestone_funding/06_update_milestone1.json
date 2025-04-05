@@ -1,0 +1,7 @@
+{
+  "$class": "org.mercy.charity.UpdateMilestone",
+  "project": "resource:org.mercy.charity.Project#PROJECT001",
+  "milestoneId": "MILESTONE001_1",
+  "isCompleted": true,
+  "evidenceHash": "0x1234567890abcdef"
+} 

@@ -1,0 +1,43 @@
+{
+  "$class": "org.mercy.charity.Project",
+  "projectId": "PROJECT002",
+  "name": "教育援助项目",
+  "description": "为贫困地区儿童提供教育支持",
+  "startDate": "2024-03-20T00:00:00.000Z",
+  "endDate": "2024-12-31T23:59:59.999Z",
+  "categories": ["教育", "儿童"],
+  "totalFundingRequired": 50000,
+  "allocatedFunding": 0,
+  "fundingStatus": "PENDING",
+  "projectStatus": "REGISTERED",
+  "milestones": [
+    {
+      "$class": "org.mercy.charity.Milestone",
+      "milestoneId": "MILESTONE002_1",
+      "description": "项目启动和需求评估",
+      "deadline": "2024-04-20T00:00:00.000Z",
+      "fundingAmount": 10000,
+      "isCompleted": false,
+      "fundingReleased": false
+    },
+    {
+      "$class": "org.mercy.charity.Milestone",
+      "milestoneId": "MILESTONE002_2",
+      "description": "教育资源采购",
+      "deadline": "2024-06-20T00:00:00.000Z",
+      "fundingAmount": 20000,
+      "isCompleted": false,
+      "fundingReleased": false
+    }
+  ],
+  "teamMembers": [
+    {
+      "$class": "org.mercy.charity.TeamMember",
+      "memberId": "TEAM002_1",
+      "name": "张老师",
+      "role": "项目负责人",
+      "contactInfo": "zhang@example.com"
+    }
+  ],
+  "owner": "resource:org.mercy.charity.ProjectOwner#OWNER002"
+} 

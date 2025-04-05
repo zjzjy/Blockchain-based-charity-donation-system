@@ -1,0 +1,9 @@
+{
+  "$class": "org.mercy.charity.Donation",
+  "transactionId": "DONATION001",
+  "donor": "resource:org.mercy.charity.Donor#DONOR001",
+  "project": "resource:org.mercy.charity.Project#PROJECT001",
+  "amount": 5000,
+  "timestamp": "2024-03-20T10:00:00.000Z",
+  "status": "COMPLETED"
+} 

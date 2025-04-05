@@ -1,0 +1,10 @@
+{
+    "$class": "org.mercy.charity.Donor",
+    "donorId": "DONOR003",
+    "name": "嘟嘟",
+    "email": "lisi@example.com",
+    "phone": "1390016700",
+    "walletAddress": "0xabcdef1234567890",
+    "totalDonatedAmount": 0,
+    "registrationDate": "2024-03-20T11:00:00.000Z"
+  } 

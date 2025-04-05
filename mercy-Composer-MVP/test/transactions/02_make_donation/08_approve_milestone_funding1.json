@@ -1,0 +1,7 @@
+{
+  "$class": "org.mercy.charity.ApproveMilestoneFunding",
+  "donor": "resource:org.mercy.charity.Donor#DONOR001",
+  "project": "resource:org.mercy.charity.Project#PROJECT001",
+  "milestoneId": "MILESTONE001_1",
+  "approved": true
+} 

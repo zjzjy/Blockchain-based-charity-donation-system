@@ -1,0 +1,6 @@
+{
+  "$class": "org.mercy.charity.MakeDonation",
+  "donor": "resource:org.mercy.charity.Donor#DONOR003",
+  "project": "resource:org.mercy.charity.Project#PROJECT002",
+  "amount": 1000
+} 

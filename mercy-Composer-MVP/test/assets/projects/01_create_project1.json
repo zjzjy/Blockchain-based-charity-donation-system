@@ -1,0 +1,43 @@
+{
+  "$class": "org.mercy.charity.Project",
+  "projectId": "PROJECT001",
+  "name": "医疗援助项目",
+  "description": "为贫困地区提供医疗支持",
+  "startDate": "2024-03-20T00:00:00.000Z",
+  "endDate": "2024-12-31T23:59:59.999Z",
+  "categories": ["医疗", "健康"],
+  "totalFundingRequired": 100000,
+  "allocatedFunding": 0,
+  "fundingStatus": "PENDING",
+  "projectStatus": "REGISTERED",
+  "milestones": [
+    {
+      "$class": "org.mercy.charity.Milestone",
+      "milestoneId": "MILESTONE001_1",
+      "description": "项目启动和需求评估",
+      "deadline": "2024-04-20T00:00:00.000Z",
+      "fundingAmount": 20000,
+      "isCompleted": false,
+      "fundingReleased": false
+    },
+    {
+      "$class": "org.mercy.charity.Milestone",
+      "milestoneId": "MILESTONE001_2",
+      "description": "医疗设备采购",
+      "deadline": "2024-06-20T00:00:00.000Z",
+      "fundingAmount": 40000,
+      "isCompleted": false,
+      "fundingReleased": false
+    }
+  ],
+  "teamMembers": [
+    {
+      "$class": "org.mercy.charity.TeamMember",
+      "memberId": "TEAM001_1",
+      "name": "李医生",
+      "role": "项目负责人",
+      "contactInfo": "li@example.com"
+    }
+  ],
+  "owner": "resource:org.mercy.charity.ProjectOwner#OWNER001"
+} 

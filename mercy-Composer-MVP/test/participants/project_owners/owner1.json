@@ -1,0 +1,8 @@
+{
+  "$class": "org.mercy.charity.ProjectOwner",
+  "projectOwnerId": "OWNER001",
+  "name": "王五",
+  "email": "wangwu@example.com",
+  "phone": "13700137000",
+  "projectIds": []
+} 
