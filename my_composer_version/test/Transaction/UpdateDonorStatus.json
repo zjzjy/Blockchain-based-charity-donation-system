@@ -1,0 +1,20 @@
+/* "updateDonorStatus": [
+    {
+      "$class": "org.mercy.donation.UpdateDonorStatus",
+      "donor": "resource:org.mercy.donation.Donor#D123",
+      "newStatus": "SUSPENDED",
+      "reason": "账户活动异常，临时暂停以进行核查"
+    },
+    {
+      "$class": "org.mercy.donation.UpdateDonorStatus",
+      "donor": "resource:org.mercy.donation.Donor#D123",
+      "newStatus": "ACTIVE",
+      "reason": "核查完成，账户恢复正常状态"
+    },
+    {
+      "$class": "org.mercy.donation.UpdateDonorStatus",
+      "donor": "resource:org.mercy.donation.Donor#D112",
+      "newStatus": "BLACKLISTED",
+      "reason": "发现欺诈行为，账户被列入黑名单"
+    }
+  ] */

@@ -1,0 +1,26 @@
+{
+  "registerDonor": [{
+    "$class": "org.mercy.donation.RegisterDonor",
+    "name": "张三",
+    "email": "zhangsan@example.com",
+    "phoneNumber": "13800138000",
+    "walletAddress": "0xD112A5B6C7D8E9F0A1B2C3D4",
+    "preferredCategories": ["教育", "健康"]
+  },
+  {
+    "$class": "org.mercy.donation.RegisterDonor",
+    "name": "李四",
+    "email": "lisi@example.com",
+    "phoneNumber": "13900139000",
+    "walletAddress": "0xD123A5B6C7D8E9F0A1B2C3D4",
+    "preferredCategories": ["环保", "儿童与青年"]
+  },
+  {
+    "$class": "org.mercy.donation.RegisterDonor",
+    "name": "王五",
+    "email": "wangwu@example.com",
+    "phoneNumber": "13700137000",
+    "walletAddress": "0xD162A5B6C7D8E9F0A1B2C3D4",
+    "preferredCategories": ["紧急救援", "教育"]
+  }]
+} 

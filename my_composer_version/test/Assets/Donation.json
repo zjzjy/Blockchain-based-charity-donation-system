@@ -1,0 +1,40 @@
+{
+  "donations": [
+    {
+      "$class": "org.mercy.donation.Donation",
+      "transactionId": "TC001",
+      "amount": 100.0,
+      "timestamp": "2025-03-06T10:15:30.000Z",
+      "status": "COMPLETED",
+      "donor": "resource:org.mercy.donation.Donor#D112",
+      "project": "resource:org.mercy.donation.Project#00012"
+    },
+    {
+      "$class": "org.mercy.donation.Donation",
+      "transactionId": "TC002",
+      "amount": 50.0,
+      "timestamp": "2025-03-06T12:05:10.000Z",
+      "status": "CANCELLED",
+      "donor": "resource:org.mercy.donation.Donor#D123",
+      "project": "resource:org.mercy.donation.Project#00017"
+    },
+    {
+      "$class": "org.mercy.donation.Donation",
+      "transactionId": "TC003",
+      "amount": 200.0,
+      "timestamp": "2025-03-06T14:20:45.000Z",
+      "status": "COMPLETED",
+      "donor": "resource:org.mercy.donation.Donor#D162",
+      "project": "resource:org.mercy.donation.Project#00023"
+    },
+    {
+      "$class": "org.mercy.donation.Donation",
+      "transactionId": "TC004",
+      "amount": 150.0,
+      "timestamp": "2025-03-06T15:35:00.000Z",
+      "status": "PARTIAL",
+      "donor": "resource:org.mercy.donation.Donor#D188",
+      "project": "resource:org.mercy.donation.Project#00085"
+    }
+  ]
+} 

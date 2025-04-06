@@ -1,0 +1,292 @@
+/**
+ * 基于Hyperledger Composer的慈善捐赠管理系统数据模型
+ * @version 1.0
+ */
+
+namespace org.mercy.donation
+
+// 枚举定义
+enum ProjectStatus {
+  o REGISTERED   // 已注册
+  o LAUNCHED     // 已启动
+  o IN_PROGRESS  // 进行中
+  o NEAR_COMPLETE // 接近完成
+  o COMPLETED    // 已完成
+  o PAUSED       // 已暂停
+  o FROZEN       // 项目冻结
+  o CANCELLED    // 已取消
+}
+
+enum DonorStatus {
+  o ACTIVE       // 活跃
+  o SUSPENDED    // 暂停
+  o BLACKLISTED  // 黑名单
+}
+
+enum FundingStatus {
+  o COMPLETED    // 已完成
+  o CANCELLED    // 已取消
+  o PARTIAL      // 部分已筹
+  o INITIATED    // 已启动
+  o FROZEN       // 资金冻结
+}
+
+enum ComplianceStatus {
+  o VERIFIED     // 已验证
+  o UNVERIFIED   // 未验证
+  o UNDER_REVIEW // 审核中
+}
+
+// 参与者定义
+participant Donor identified by donorId {
+  o String donorId      // 唯一标识符如 D112
+  o String name optional // 捐赠者全名（可选）
+  o String email        // 通知与沟通用邮箱
+  o String phoneNumber optional // 联系方式（可选）
+  o String walletAddress // 用于追踪交易的区块链钱包地址
+  o String[] preferredCategories optional // 感兴趣的捐赠类别（如教育、健康）
+  o Double totalDonationAmount // 累计捐赠金额(USD)
+  o DateTime registrationTimestamp // 注册时间
+  o DonorStatus status  // 账户状态
+}
+
+participant ProjectOwner identified by ownerId {
+  o String ownerId      // 项目所有者ID
+  o String name         // 组织名称
+  o String email        // 电子邮箱
+  o String phoneNumber  // 联系电话
+  o String walletAddress // 钱包地址
+  o String registrationNumber // 组织注册号
+  o ComplianceStatus complianceStatus // 合规状态
+}
+
+participant Auditor identified by auditorId {
+  o String auditorId    // 审计员ID
+  o String name         // 姓名
+  o String organization // 所属组织
+  o String email        // 电子邮箱
+  o String certificationId // 认证ID
+}
+
+// 概念定义
+concept Milestone {
+  o String description  // 里程碑描述
+  o DateTime deadline   // 截止日期
+  o Boolean completed default=false // 是否完成
+  o Boolean verified default=false // 是否完成
+  o String verificationDocument optional // 验证文档（可选）
+  o DateTime completionDate optional // 完成日期
+
+}
+
+concept TeamMember {
+  o String name         // 姓名
+  o String role         // 角色
+  o String email optional // 电子邮箱（可选）
+}
+
+concept Partner {
+  o String name         // 合作伙伴名称
+  o String description  // 描述
+}
+
+concept FundingMilestone {
+  o Double amount       // 金额
+  o DateTime releaseDate // 释放日期
+  o Boolean released default=false // 是否已释放
+  o String description  // 描述
+}
+
+// 资产定义
+
+asset Project identified by projectId {
+  o String projectId    // 项目唯一标识
+  o String name         // 项目名称
+  o String description  // 项目描述
+  o DateTime startDate  // 项目开始日期
+  o DateTime endDate    // 项目结束日期
+  o ProjectStatus status // 项目状态
+  o String[] categories // 项目分类（多选）
+  o Double totalRequiredAmount // 总需求金额
+  o Double allocatedAmount // 已分配资金
+  o FundingStatus fundingStatus // 资金状态
+  o Milestone[] milestones // 项目里程碑
+  o FundingMilestone[] fundingMilestones // 资金里程碑
+  o TeamMember[] teamMembers // 团队成员
+  o Partner[] partners optional // 合作伙伴（可选）
+  o String contactInfo  // 联系方式
+  o ComplianceStatus complianceStatus // 合规状态
+  o String complianceIssues optional // 合规问题描述（如果有）
+  o String auditReportHash optional // 审计报告哈希（可选）
+  o String regulatoryInfo // 监管信息（如注册号）
+  --> ProjectOwner owner // 项目所有者
+  o DateTime lastUpdated // 最后更新时间
+  o ProjectStatus statusBeforeFreeze optional // 冻结前状态
+  o String freezeReason optional // 冻结原因
+  o String freezeInitiator optional // 冻结发起人ID
+  o DateTime freezeTime optional // 冻结时间
+  o String unfreezeReason optional // 解冻原因
+  o DateTime unfreezeTime optional // 解冻时间
+  o ProjectStatus pendingStatus optional // 待批准的状态
+  o String pendingStatusAuditor optional // 状态更新审计员
+  o String pendingStatusReason optional // 状态更新原因
+  o String comments optional // 评论（可选）
+  o Double totalReleasedAmount optional // 已释放资金总额
+  o String recommendedStatus optional // 推荐的状态更新
+}
+
+asset Donation identified by transactionId {
+  o String transactionId // 交易ID（唯一）
+  o Double amount       // 金额(USD)
+  o DateTime timestamp  // 时间戳
+  o FundingStatus status // 资金状态
+  --> Donor donor       // 捐赠者
+  --> Project project   // 项目
+}
+
+// 交易定义
+transaction RegisterDonor {
+  o String name optional // 捐赠者全名（可选）
+  o String email         // 通知与沟通用邮箱
+  o String phoneNumber optional // 联系方式（可选）
+  o String walletAddress // 用于追踪交易的区块链钱包地址
+  o String[] preferredCategories optional // 感兴趣的捐赠类别（如教育、健康）
+}
+
+transaction UpdateDonorStatus {
+  --> Donor donor       // 捐赠者
+  o DonorStatus newStatus // 新状态
+  o String reason       // 更新原因
+}
+
+transaction RegisterProject {
+  o String name         // 项目名称
+  o String description  // 项目描述
+  o DateTime startDate  // 项目开始日期
+  o DateTime endDate    // 项目结束日期
+  o String[] categories // 项目分类
+  o Double totalRequiredAmount // 总需求金额
+  o Milestone[] milestones // 项目里程碑
+  o FundingMilestone[] fundingMilestones // 资金里程碑
+  o TeamMember[] teamMembers // 团队成员
+  o Partner[] partners optional // 合作伙伴（可选）
+  o String contactInfo  // 联系方式
+  o String regulatoryInfo // 监管信息
+  --> ProjectOwner owner // 项目所有者
+}
+
+transaction UpdateProjectStatus {
+  --> Project project   // 项目
+  o ProjectStatus newStatus // 新状态
+  o String reason       // 更新原因
+}
+
+transaction ApproveProjectStatusUpdate {
+  --> Project project   // 项目
+  o Boolean approved    // 是否批准
+  o String comments optional // 评论（可选）
+}
+
+transaction MakeDonation {
+  o Double amount       // 金额
+  --> Project project   // 项目
+}
+
+transaction VerifyProjectCompliance {
+  --> Project project    // 项目
+  o Boolean compliant    // 是否合规
+  o String reason optional // 不合规原因（如果不合规）
+  o String auditReportHash optional // 审计报告哈希（可选）
+}
+
+transaction UpdateMilestone {
+  --> Project project   // 项目
+  o Integer milestoneIndex // 里程碑索引
+  o Boolean completed    // 是否完成
+  o String verificationDocument optional // 验证文档
+}
+
+transaction VerifyMilestone {
+  --> Project project   // 项目
+  o Integer milestoneIndex // 里程碑索引
+  o Boolean verified     // 是否验证通过
+  o String comments optional // 评论（可选）
+}
+
+transaction ReleaseFunds {
+  --> Project project    // 项目
+  o Integer fundingMilestoneIndex // 资金里程碑索引
+}
+
+transaction FreezeProject {
+  --> Project project    // 项目
+  o String reason        // 冻结原因
+}
+
+transaction UnfreezeProject {
+  --> Project project    // 项目
+  o String reason        // 解冻原因
+}
+
+event DonorRegistered {
+  o String donorId      // 捐赠者ID
+  o String email        // 电子邮箱
+
+}
+
+event ProjectRegistered {
+  o String projectId    // 项目ID
+  o String name         // 项目名称
+
+}
+
+event DonationMade {
+  o String transactionId // 交易ID
+  o Double amount       // 金额
+  o String donorId      // 捐赠者ID
+  o String projectId    // 项目ID
+
+}
+
+event ProjectStatusUpdated {
+  o String projectId    // 项目ID
+  o ProjectStatus oldStatus // 旧状态
+  o ProjectStatus newStatus // 新状态
+  o String auditorId    // 审计员ID
+
+}
+
+event MilestoneUpdated {
+  o String projectId    // 项目ID
+  o Integer milestoneIndex // 里程碑索引
+  o Boolean completed   // 是否完成
+  o String ownerID      // 项目所有者ID
+
+}
+
+event FundsReleased {
+  o String projectId    // 项目ID
+  o String auditorId    // 审计员ID
+  o Double amount       // 金额
+
+}
+
+event ProjectFrozen {
+  o String projectId    // 项目ID
+  o String reason       // 冻结原因
+  o String initiatorId  // 发起人ID
+
+}
+
+event ProjectUnfrozen {
+  o String projectId    // 项目ID
+  o String auditorId    // 审计员ID
+  o String donorId      // 捐赠者ID
+
+}
+
+event ProjectComplianceVerified {
+  o String projectId     // 项目ID
+  o Boolean compliant    // 是否合规
+  o String auditorId     // 审计员ID
+}

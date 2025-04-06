@@ -1,0 +1,156 @@
+{"registerProject": [{
+      "$class": "org.mercy.donation.RegisterProject",
+      "name": "乡村医疗点建设",
+      "description": "在偏远乡村建立基础医疗点，提供日常医疗服务和健康教育",
+      "startDate": "2025-04-01T00:00:00.000Z",
+      "endDate": "2025-10-01T00:00:00.000Z",
+      "categories": ["健康", "社区发展"],
+      "totalRequiredAmount": 15000.0,
+      "milestones": [
+        {
+          "$class": "org.mercy.donation.Milestone",
+          "description": "场地选址与租赁",
+          "deadline": "2025-04-15T00:00:00.000Z",
+          "completed": false
+        },
+        {
+          "$class": "org.mercy.donation.Milestone",
+          "description": "医疗设备采购",
+          "deadline": "2025-05-15T00:00:00.000Z",
+          "completed": false
+        },
+        {
+          "$class": "org.mercy.donation.Milestone",
+          "description": "医护人员招募与培训",
+          "deadline": "2025-06-15T00:00:00.000Z",
+          "completed": false
+        },
+        {
+          "$class": "org.mercy.donation.Milestone",
+          "description": "开始提供医疗服务",
+          "deadline": "2025-07-01T00:00:00.000Z",
+          "completed": false
+        },
+        {
+          "$class": "org.mercy.donation.Milestone",
+          "description": "完成季度评估报告",
+          "deadline": "2025-09-30T00:00:00.000Z",
+          "completed": false
+        }
+      ],
+      "fundingMilestones": [
+        {
+          "$class": "org.mercy.donation.FundingMilestone",
+          "amount": 7500.0,
+          "releaseDate": "2025-04-10T00:00:00.000Z",
+          "released": false,
+          "description": "项目启动资金"
+        },
+        {
+          "$class": "org.mercy.donation.FundingMilestone",
+          "amount": 4500.0,
+          "releaseDate": "2025-06-01T00:00:00.000Z",
+          "released": false,
+          "description": "中期运营资金"
+        },
+        {
+          "$class": "org.mercy.donation.FundingMilestone",
+          "amount": 3000.0,
+          "releaseDate": "2025-08-15T00:00:00.000Z",
+          "released": false,
+          "description": "项目收尾资金"
+        }
+      ],
+      "teamMembers": [
+        {
+          "$class": "org.mercy.donation.TeamMember",
+          "name": "徐医师",
+          "role": "医疗顾问",
+          "email": "xuyishi@hopelight.org"
+        },
+        {
+          "$class": "org.mercy.donation.TeamMember",
+          "name": "吴经理",
+          "role": "项目经理",
+          "email": "wujingli@hopelight.org"
+        }
+      ],
+      "partners": [
+        {
+          "$class": "org.mercy.donation.Partner",
+          "name": "县卫生局",
+          "description": "提供政策支持和医疗资源"
+        },
+        {
+          "$class": "org.mercy.donation.Partner",
+          "name": "乡村医生协会",
+          "description": "提供医疗技术支持"
+        }
+      ],
+      "contactInfo": "吴经理，13700137700，wujingli@hopelight.org",
+      "regulatoryInfo": "NGO20250001-P002",
+      "owner": "resource:org.mercy.donation.ProjectOwner#PO001"
+    },
+    {
+      "$class": "org.mercy.donation.RegisterProject",
+      "name": "社区垃圾分类与环保教育",
+      "description": "在城市社区推广垃圾分类知识，倡导环保生活方式",
+      "startDate": "2025-03-15T00:00:00.000Z",
+      "endDate": "2025-06-15T00:00:00.000Z",
+      "categories": ["环保", "社区发展"],
+      "totalRequiredAmount": 5000.0,
+      "milestones": [
+        {
+          "$class": "org.mercy.donation.Milestone",
+          "description": "制作环保宣传材料",
+          "deadline": "2025-03-30T00:00:00.000Z",
+          "completed": false
+        },
+        {
+          "$class": "org.mercy.donation.Milestone",
+          "description": "开展社区讲座",
+          "deadline": "2025-04-20T00:00:00.000Z",
+          "completed": false
+        },
+        {
+          "$class": "org.mercy.donation.Milestone",
+          "description": "安装分类垃圾桶",
+          "deadline": "2025-05-15T00:00:00.000Z",
+          "completed": false
+        }
+      ],
+      "fundingMilestones": [
+        {
+          "$class": "org.mercy.donation.FundingMilestone",
+          "amount": 2500.0,
+          "releaseDate": "2025-03-25T00:00:00.000Z",
+          "released": false,
+          "description": "项目启动资金"
+        },
+        {
+          "$class": "org.mercy.donation.FundingMilestone",
+          "amount": 2500.0,
+          "releaseDate": "2025-05-01T00:00:00.000Z",
+          "released": false,
+          "description": "中期和收尾资金"
+        }
+      ],
+      "teamMembers": [
+        {
+          "$class": "org.mercy.donation.TeamMember",
+          "name": "陈静",
+          "role": "项目协调员",
+          "email": "chenjing@greenearth.org"
+        }
+      ],
+      "partners": [
+        {
+          "$class": "org.mercy.donation.Partner",
+          "name": "市环保局",
+          "description": "政策支持和技术指导"
+        }
+      ],
+      "contactInfo": "陈静, 13500135000, chenjing@greenearth.org",
+      "regulatoryInfo": "NGO20250002-P001",
+      "owner": "resource:org.mercy.donation.ProjectOwner#PO002"
+    }]}

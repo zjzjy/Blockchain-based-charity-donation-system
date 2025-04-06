@@ -1,0 +1,8 @@
+{"verifyMilestone": {
+    "$class": "org.mercy.donation.VerifyMilestone",
+    "project": "resource:org.mercy.donation.Project#0009029",
+    "milestoneIndex": 0,
+    "verified": true,
+    "comments": "已核实教材采购清单和配送记录，符合项目要求",
+    "auditor": "resource:org.mercy.donation.Auditor#A001"
+  }}

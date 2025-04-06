@@ -1,0 +1,40 @@
+{
+  "donors": [
+    {
+      "$class": "org.mercy.donation.Donor",
+      "donorId": "D112",
+      "name": "张三",
+      "email": "zhangsan@example.com",
+      "phoneNumber": "13800138000",
+      "walletAddress": "0xD112A5B6C7D8E9F0A1B2C3D4",
+      "preferredCategories": ["教育", "健康"],
+      "totalDonationAmount": 500.0,
+      "registrationTimestamp": "2025-03-01T10:00:00.000Z",
+      "status": "ACTIVE"
+    },
+    {
+      "$class": "org.mercy.donation.Donor",
+      "donorId": "D123",
+      "name": "李四",
+      "email": "lisi@example.com",
+      "phoneNumber": "13900139000",
+      "walletAddress": "0xD123A5B6C7D8E9F0A1B2C3D4",
+      "preferredCategories": ["环保", "儿童与青年"],
+      "totalDonationAmount": 300.0,
+      "registrationTimestamp": "2025-03-02T09:30:00.000Z",
+      "status": "ACTIVE"
+    },
+    {
+      "$class": "org.mercy.donation.Donor",
+      "donorId": "D162",
+      "name": "王五",
+      "email": "wangwu@example.com",
+      "phoneNumber": "13700137000",
+      "walletAddress": "0xD162A5B6C7D8E9F0A1B2C3D4",
+      "preferredCategories": ["紧急救援", "教育"],
+      "totalDonationAmount": 0.0,
+      "registrationTimestamp": "2025-03-03T14:20:00.000Z",
+      "status": "ACTIVE"
+    }
+  ]
+} 

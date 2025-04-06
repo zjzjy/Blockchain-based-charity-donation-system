@@ -1,0 +1,45 @@
+{
+  "name": "mercy-donation-network",
+  "version": "0.1.0",
+  "description": "基于区块链的慈善捐赠追踪与自动拨付系统",
+
+  "scripts": {
+    "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/mercy-charity.bna",
+    "pretest": "npm run lint",
+    "lint": "eslint .",
+    "test": "nyc mocha -t 0 test/*.js",
+    "start": "composer-playground",
+    "deploy": "composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName mercy-charity && composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile dist/mercy-charity.bna --file networkadmin.card && composer card import --file networkadmin.card",
+    "update": "composer archive create --sourceType dir --sourceName . -a ./dist/mercy-charity.bna && composer network update -a ./dist/mercy-charity.bna -c admin@mercy-charity"
+  },
+  "author": "Xiyue",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "composer-admin": "^0.20.8",
+    "composer-cli": "^0.20.8",
+    "composer-client": "^0.20.8",
+    "composer-common": "^0.20.8",
+    "composer-connector-embedded": "^0.20.8",
+    "composer-cucumber-steps": "^0.20.8",
+    "chai": "latest",
+    "chai-as-promised": "latest",
+    "cucumber": "^2.2.0",
+    "eslint": "latest",
+    "nyc": "latest",
+    "mkdirp": "latest",
+    "mocha": "latest"
+  },
+  "engines": {
+    "composer": "^0.20.8"
+  },
+  "keywords": [
+    "charity",
+    "donation",
+    "blockchain",
+    "transparency",
+    "hyperledger",
+    "composer",
+    "fabric"
+  ]
+
+}

@@ -1,0 +1,20 @@
+{
+    "auditors": [
+      {
+        "$class": "org.mercy.donation.Auditor",
+        "auditorId": "A001",
+        "name": "李明",
+        "organization": "公益审计协会",
+        "email": "liming@auditorg.com",
+        "certificationId": "CERT20250001"
+      },
+      {
+        "$class": "org.mercy.donation.Auditor",
+        "auditorId": "A002",
+        "name": "王华",
+        "organization": "透明慈善中心",
+        "email": "wanghua@transparentcharity.org",
+        "certificationId": "CERT20250002"
+      }
+    ]
+  }

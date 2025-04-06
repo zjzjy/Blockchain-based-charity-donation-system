@@ -1,0 +1,265 @@
+/**
+ * 基于区块链的慈善捐赠追踪与自动拨付系统的访问控制
+ */
+
+
+
+// 所有参与者都可以读取网络信息
+rule NetworkAdminUser {
+    description: "网络管理员用户可以完全访问网络资源"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "网络管理员系统可以完全访问网络资源"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+// 所有参与者都可以读取项目信息
+rule AllParticipantsReadProject {
+    description: "所有参与者都可以读取项目信息"
+    participant: "org.mercy.donation.*"
+    operation: READ
+    resource: "org.mercy.donation.Project"
+    action: ALLOW
+}
+
+// 捐赠者规则
+rule DonorReadDonorInfo {
+    description: "捐赠者只能读取自己的信息"
+    participant(p): "org.mercy.donation.Donor"
+    operation: READ
+    resource(r): "org.mercy.donation.Donor"
+    condition: (p.donorId === r.donorId)
+    action: ALLOW
+}
+
+rule DonorReadOwnDonations {
+    description: "捐赠者只能读取自己的捐赠记录"
+    participant(p): "org.mercy.donation.Donor"
+    operation: READ
+    resource(r): "org.mercy.donation.Donation"
+    condition: (p.donorId === r.donor.donorId)
+    action: ALLOW
+}
+
+rule DonorCanCreateDonation {
+    description: "捐赠者可以创建捐赠资产"
+    participant(p): "org.mercy.donation.Donor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.Donation"
+    condition: (p.getIdentifier() === r.donor.getIdentifier())
+    action: ALLOW
+}
+
+rule DonorCanRegister {
+    description: "捐赠者可以注册"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: CREATE
+    resource: "org.mercy.donation.RegisterDonor"
+    action: ALLOW
+}
+
+rule DonorCanMakeDonation {
+    description: "捐赠者可以进行捐赠"
+    participant(p): "org.mercy.donation.Donor"
+    operation: CREATE
+    resource: "org.mercy.donation.MakeDonation"
+    condition: (p.status === 'ACTIVE')
+    action: ALLOW
+}
+
+
+
+rule DonorCanApproveProjectStatusUpdate {
+    description: "捐赠者可以批准项目状态更新"
+    participant(p): "org.mercy.donation.Donor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.ApproveProjectStatusUpdate"
+    condition: (p.donorId === r.donor.donorId)
+    action: ALLOW
+}
+
+rule DonorCanFreezeProject {
+    description: "捐赠者可以冻结项目"
+    participant(p): "org.mercy.donation.Donor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.FreezeProject"
+    condition: (p.donorId === r.donor.donorId)
+    action: ALLOW
+}
+
+// 项目所有者规则
+rule ProjectOwnerReadOwnInfo {
+    description: "项目所有者只能读取自己的信息"
+    participant(p): "org.mercy.donation.ProjectOwner"
+    operation: READ
+    resource(r): "org.mercy.donation.ProjectOwner"
+    condition: (p.ownerId === r.ownerId)
+    action: ALLOW
+}
+
+rule ProjectOwnerReadOwnProjects {
+    description: "项目所有者只能读取自己的项目"
+    participant(p): "org.mercy.donation.ProjectOwner"
+    operation: READ
+    resource(r): "org.mercy.donation.Project"
+    condition: (p.ownerId === r.owner.ownerId)
+    action: ALLOW
+}
+
+rule ProjectOwnerReadProjectDonations {
+    description: "项目所有者可以读取与其项目相关的捐赠"
+    participant(p): "org.mercy.donation.ProjectOwner"
+    operation: READ
+    resource(r): "org.mercy.donation.Donation"
+    condition: (p.ownerId === r.project.owner.ownerId)
+    action: ALLOW
+}
+
+rule ProjectOwnerCanRegisterProject {
+    description: "项目所有者可以注册项目"
+    participant(p): "org.mercy.donation.ProjectOwner"
+    operation: CREATE
+    resource(r): "org.mercy.donation.RegisterProject"
+    condition: (p.complianceStatus === "VERIFIED")
+    action: ALLOW
+}
+
+rule ProjectOwnerCanCreateProject {
+    description: "项目所有者可以创建项目"
+    participant(p): "org.mercy.donation.ProjectOwner"
+    operation: CREATE
+    resource(r): "org.mercy.donation.Project"
+    condition: (p.ownerId === r.owner.ownerId)
+    action: ALLOW
+}
+
+rule ProjectOwnerCanUpdateMilestone {
+    description: "项目所有者可以更新里程碑"
+    participant(p): "org.mercy.donation.ProjectOwner"
+    operation: CREATE
+    resource(r): "org.mercy.donation.UpdateMilestone"
+    condition: (p.ownerId === r.owner.ownerId)
+    action: ALLOW
+}
+
+// 审计员规则
+rule AuditorReadAllProjects {
+    description: "审计员可以读取所有项目"
+    participant: "org.mercy.donation.Auditor"
+    operation: READ
+    resource: "org.mercy.donation.Project"
+    action: ALLOW
+}
+
+rule AuditorReadAllDonations {
+    description: "审计员可以读取所有捐赠记录"
+    participant: "org.mercy.donation.Auditor"
+    operation: READ
+    resource: "org.mercy.donation.Donation"
+    action: ALLOW
+}
+
+rule AuditorReadAllDonors {
+    description: "审计员可以读取所有捐赠者信息"
+    participant: "org.mercy.donation.Auditor"
+    operation: READ
+    resource: "org.mercy.donation.Donor"
+    action: ALLOW
+}
+
+rule AuditorReadAllProjectOwners {
+    description: "审计员可以读取所有项目所有者信息"
+    participant: "org.mercy.donation.Auditor"
+    operation: READ
+    resource: "org.mercy.donation.ProjectOwner"
+    action: ALLOW
+}
+
+rule AuditorCanUpdateProjectStatus {
+    description: "审计员可以更新项目状态"
+    participant(p): "org.mercy.donation.Auditor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.UpdateProjectStatus"
+    condition: (p.auditorId === r.auditor.auditorId)
+    action: ALLOW
+}
+
+rule AuditorCanVerifyMilestone {
+    description: "审计员可以验证里程碑"
+    participant(p): "org.mercy.donation.Auditor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.VerifyMilestone"
+    condition: (p.auditorId === r.auditor.auditorId)
+    action: ALLOW
+}
+
+rule AuditorCanReleaseFunds {
+    description: "审计员可以释放资金"
+    participant(p): "org.mercy.donation.Auditor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.ReleaseFunds"
+    condition: (p.auditorId === r.auditor.auditorId)
+    action: ALLOW
+}
+
+rule AuditorCanFreezeProject {
+    description: "审计员可以冻结项目"
+    participant(p): "org.mercy.donation.Auditor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.FreezeProject"
+    condition: (p.auditorId === r.auditor.auditorId)
+    action: ALLOW
+}
+
+rule AuditorCanUnfreezeProject {
+    description: "审计员可以解冻项目"
+    participant(p): "org.mercy.donation.Auditor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.UnfreezeProject"
+    condition: (p.auditorId === r.auditor.auditorId)
+    action: ALLOW
+}
+
+rule AuditorCanVerifyProjectCompliance {
+    description: "审计员可以验证项目合规性"
+    participant(p): "org.mercy.donation.Auditor"
+    operation: CREATE
+    resource(r): "org.mercy.donation.VerifyProjectCompliance"
+    condition: (true)
+    action: ALLOW
+}
+
+// 系统规则
+rule SystemACL {
+    description: "系统ACL允许创建历史记录和执行系统操作"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule AllowTransactionProcessorsToUpdateResources {
+    description: "允许交易处理函数更新资源"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.mercy.donation.**"
+    transaction: "**"
+    action: ALLOW
+}
+
+// 默认拒绝规则（放在最后）
+rule DefaultDeny {
+    description: "默认拒绝所有访问"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.mercy.donation.**"
+    action: DENY
+}

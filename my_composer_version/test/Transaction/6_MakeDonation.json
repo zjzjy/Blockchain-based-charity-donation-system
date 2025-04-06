@@ -1,0 +1,22 @@
+{
+  "makeDonation": [
+      {
+        "$class": "org.mercy.donation.MakeDonation",
+        "amount": 4500.0,
+        "donor": "resource:org.mercy.donation.Donor#D112",
+        "project": "resource:org.mercy.donation.Project#000"
+      },
+      {
+        "$class": "org.mercy.donation.MakeDonation",
+        "amount": 1000.0,
+        "donor": "resource:org.mercy.donation.Donor#D123",
+        "project": "resource:org.mercy.donation.Project#000"
+      },
+      {
+        "$class": "org.mercy.donation.MakeDonation",
+        "amount": 2000.0,
+        "donor": "resource:org.mercy.donation.Donor#D162",
+        "project": "resource:org.mercy.donation.Project#000"
+      }
+    ]
+  }

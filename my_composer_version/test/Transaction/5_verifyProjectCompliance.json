@@ -1,0 +1,21 @@
+{"verifyProjectCompliance": [{
+    "$class": "org.mercy.donation.VerifyProjectCompliance",
+    "project": "resource:org.mercy.donation.Project#0003570",
+    "compliant": true,
+    "auditReportHash": "0x8f5e8d6a2c4b9e7f1d3a5c0b8e6d4f2a1c3b5e7d9",
+    "auditor": "resource:org.mercy.donation.Auditor#A001"
+  },
+  {
+    "$class": "org.mercy.donation.VerifyProjectCompliance",
+    "project": "resource:org.mercy.donation.Project#00017",
+    "compliant": false,
+    "reason": "项目资金使用计划不明确，需要补充预算细节",
+    "auditor": "resource:org.mercy.donation.Auditor#A002"
+  },
+  {
+    "$class": "org.mercy.donation.VerifyProjectCompliance",
+    "project": "resource:org.mercy.donation.Project#00017",
+    "compliant": true,
+    "auditReportHash": "0x7d9e6c5b4a3f2d1e0c8b7a6d5e4f3c2b1a0d9e8f7",
+    "auditor": "resource:org.mercy.donation.Auditor#A002"
+  }]}

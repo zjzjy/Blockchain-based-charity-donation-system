@@ -1,0 +1,7 @@
+{"approveProjectStatusUpdate": {
+  "$class": "org.mercy.donation.ApproveProjectStatusUpdate",
+  "project": "resource:org.mercy.donation.Project#00012",
+  "approved": true,
+  "comments": "审核材料完整，同意项目启动",
+  "donor": "resource:org.mercy.donation.Donor#D112"
+}}

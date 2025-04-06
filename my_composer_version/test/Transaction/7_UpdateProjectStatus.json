@@ -1,0 +1,7 @@
+{"updateProjectStatus": {
+      "$class": "org.mercy.donation.UpdateProjectStatus",
+      "project": "resource:org.mercy.donation.Project#0009029",
+      "newStatus": "LAUNCHED",
+      "reason": "项目初审通过，资金已达到启动条件",
+      "auditor": "resource:org.mercy.donation.Auditor#A001"
+    }}

@@ -1,0 +1,7 @@
+{"unfreezeProject": {
+    "$class": "org.mercy.donation.UnfreezeProject",
+    "project": "resource:org.mercy.donation.Project#00017",
+    "reason": "经核实，项目材料问题已解决，可以继续进行",
+    "auditor": "resource:org.mercy.donation.Auditor#A002",
+    "donor": "resource:org.mercy.donation.Donor#D123"
+  }}

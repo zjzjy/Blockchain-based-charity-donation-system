@@ -1,0 +1,24 @@
+{
+  "projectOwners": [
+    {
+      "$class": "org.mercy.donation.ProjectOwner",
+      "ownerId": "PO001",
+      "name": "希望之光基金会",
+      "email": "contact@hopelight.org",
+      "phoneNumber": "010-12345678",
+      "walletAddress": "0xPO001A5B6C7D8E9F0A1B2C3D4",
+      "registrationNumber": "NGO20250001",
+      "complianceStatus": "VERIFIED"
+    },
+    {
+      "$class": "org.mercy.donation.ProjectOwner",
+      "ownerId": "PO002",
+      "name": "绿色地球组织",
+      "email": "info@greenearth.org",
+      "phoneNumber": "010-87654321",
+      "walletAddress": "0xPO002A5B6C7D8E9F0A1B2C3D4",
+      "registrationNumber": "NGO20250002",
+      "complianceStatus": "VERIFIED"
+    }
+  ]
+} 

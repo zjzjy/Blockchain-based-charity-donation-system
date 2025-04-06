@@ -1,0 +1,8 @@
+{"updateMilestone": {
+    "$class": "org.mercy.donation.UpdateMilestone",
+    "project": "resource:org.mercy.donation.Project#0009029",
+    "milestoneIndex": 0,
+    "completed": true,
+    "verificationDocument": "https://example.com/verification/00012/milestone1",
+    "owner": "resource:org.mercy.donation.ProjectOwner#PO001"
+  }}

@@ -1,0 +1,7 @@
+{
+"freezeProject": {
+      "$class": "org.mercy.donation.FreezeProject",
+      "project": "resource:org.mercy.donation.Project#00017",
+      "reason": "发现项目材料存在不一致情况，需要进一步核实",
+      "auditor": "resource:org.mercy.donation.Auditor#A002"
+    }}

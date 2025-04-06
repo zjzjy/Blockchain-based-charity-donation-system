@@ -1,0 +1,28 @@
+{
+  "name": "mercy-donation-network",
+  "version": "0.1.0",
+  "description": "基于 Hyperledger Composer 的慈善捐赠管理系统",
+  "scripts": {
+    "prestart": "composer archive create -t dir -n .",
+    "start": "composer network start --networkName mercy-donation-network --networkVersion 0.1.0 --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw",
+    "deploy": "composer network deploy -a mercy-donation-network@0.1.0.bna -A admin -S adminpw -c PeerAdmin@hlfv1 -f networkadmin.card",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hyperledger",
+    "composer",
+    "blockchain",
+    "charity",
+    "donation"
+  ],
+  "author": "Mercy Donation System Team",
+  "email": "223040137@link.cuhk.edu.cn",
+  "license": "MIT",
+  "dependencies": {
+    "composer-admin": "^0.20.0",
+    "composer-client": "^0.20.0",
+    "composer-common": "^0.20.0",
+    "composer-connector-hlfv1": "^0.20.0",
+    "composer-runtime-hlfv1": "^0.20.0"
+  }
+} 
